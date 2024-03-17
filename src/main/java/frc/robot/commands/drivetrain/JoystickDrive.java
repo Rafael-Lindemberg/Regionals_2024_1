@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrain;
 
 public class JoystickDrive extends Command {
-  public static final double DEADBAND = .15;
+  public static final double DEADBAND = .2;
 
   private static final boolean SMARTDASHBOARD = true;
 

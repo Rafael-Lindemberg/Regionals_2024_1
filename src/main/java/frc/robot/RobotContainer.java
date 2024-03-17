@@ -27,9 +27,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.drivetrain.DriveToPose;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.NorthUntilInterupt;
-import frc.robot.commands.leds.RunMatrixImageCommand;
-import frc.robot.commands.leds.RunMatrixVideoCommand;
-import frc.robot.commands.leds.RunMatrixVideoCommand.RunType;
+
 import frc.robot.subsystems.*;
 import frc.robot.utility.YamlLoader;
 import frc.team1891.common.control.AxisTrigger;
@@ -121,9 +119,6 @@ public class RobotContainer {
   private JoystickButton m_CoGrab = new JoystickButton(m_coBox, 3);
   // belt back and forth
   // grab and drop
-  private RunMatrixVideoCommand offlineCommand;
-  private RunMatrixVideoCommand firstLogo;
-  private RunMatrixVideoCommand lowBattery;
 
     // DEMO BUTTON
     String number_image = "";

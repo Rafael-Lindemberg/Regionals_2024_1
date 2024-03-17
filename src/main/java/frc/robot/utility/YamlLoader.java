@@ -5,7 +5,6 @@
 package frc.robot.utility;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import frc.robot.subsystems.MatrixLEDs;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -47,12 +46,6 @@ public class YamlLoader {
 
     private static void loadMatImages() {
         // We need these for debugging the Matrix LEDs physical configuration.
-        images.put("Off", MatrixLEDs.off());
-        images.put("Row One", MatrixLEDs.oneRow(0));
-        images.put("Row Two", MatrixLEDs.oneRow(1));
-        images.put("Col One", MatrixLEDs.oneCol(0));
-        images.put("Col Two", MatrixLEDs.oneCol(1));
-        images.put("Eye", MatrixLEDs.eye());
     }
 
     private static void putImage(String key, Mat value) {

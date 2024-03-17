@@ -21,8 +21,8 @@ import frc.robot.RobotContainer;
 public abstract class SwerveModule {
     protected int ignorCount = 20;
     protected int m_moduleNumber;
-    public static SwerveModule createFromDriveFalconAndSteerFalcon(TalonFX driveFalcon,
-                                                                   TalonFX steeringFalcon,
+    public static SwerveModule createFromDriveFalconAndSteerFalcon(TalonFX driveKraken,
+                                                                   TalonFX steeringKraken,
                                                                    CANcoder encoder,
                                                                    DrivetrainConfig config,
                                                                    double driveP,
@@ -34,13 +34,13 @@ public abstract class SwerveModule {
         return new SwerveModule(encoder, driveP, driveI, driveD, steerP, steerI, steerD, 1) {
             @Override
             public SwerveModuleState getState() {
-                return new SwerveModuleState(config.nativeUnitsToVelocityMeters(driveFalcon.get()), getCANCoderRotation2d());
+                return new SwerveModuleState(config.nativeUnitsToVelocityMeters(driveKraken.get()), getCANCoderRotation2d());
             }
 
             @Override
             public SwerveModulePosition getPosition() {
                 // Need to add refresh() in swerve drive train periodic
-                return new SwerveModulePosition(config.nativeUnitsToDistanceMeters(driveFalcon.getPosition().getValue()), getCANCoderRotation2d());
+                return new SwerveModulePosition(config.nativeUnitsToDistanceMeters(driveKraken.getPosition().getValue()), getCANCoderRotation2d());
             }
 
             @Override
@@ -51,21 +51,21 @@ public abstract class SwerveModule {
 
                 // Calculate the drive output from the drive PID controller.
                 final double driveOutput =
-                        drivePIDController.calculate(config.nativeUnitsToVelocityMeters(driveFalcon.get()), state.speedMetersPerSecond);
+                        drivePIDController.calculate(config.nativeUnitsToVelocityMeters(driveKraken.get()), state.speedMetersPerSecond);
 
                 // Calculate the turning motor output from the turning PID controller.
                 final double turnOutput =
                         turningPIDController.calculate(getAbsoluteCANCoderRadians(), state.angle.getRadians());
 
                 // Calculate the turning motor output from the turning PID controller.
-                driveFalcon.set(driveOutput);
-                steeringFalcon.set(turnOutput);
+                driveKraken.set(driveOutput);
+                steeringKraken.set(turnOutput);
             }
         };
     }
 
-    public static SwerveModule createFromDriveFalconAndSteeringNeo(TalonFX driveFalcon,
-                                                                   CANSparkMax steeringNeo,
+    public static SwerveModule createFromDriveKrakenAndSteeringKraken(TalonFX driveKraken,
+                                                                   TalonFX steeringKraken,
                                                                    CANcoder encoder,
                                                                    DrivetrainConfig config,
                                                                    double driveP,
@@ -79,12 +79,12 @@ public abstract class SwerveModule {
             
             @Override
             public SwerveModuleState getState() {
-                return new SwerveModuleState(config.nativeUnitsToVelocityMeters(driveFalcon.get()), getCANCoderRotation2d());
+                return new SwerveModuleState(config.nativeUnitsToVelocityMeters(driveKraken.get()), getCANCoderRotation2d());
             }
 
             @Override
             public SwerveModulePosition getPosition() {
-                return new SwerveModulePosition(config.nativeUnitsToDistanceMeters(driveFalcon.getPosition().getValue()), getCANCoderRotation2d());
+                return new SwerveModulePosition(config.nativeUnitsToDistanceMeters(driveKraken.getPosition().getValue()), getCANCoderRotation2d());
             }
 
             @Override
@@ -97,7 +97,7 @@ public abstract class SwerveModule {
 
                 // Calculate the drive output from the drive PID controller.
                 final double driveOutput =
-                        drivePIDController.calculate(config.nativeUnitsToVelocityMeters(driveFalcon.get()), state.speedMetersPerSecond);
+                        drivePIDController.calculate(config.nativeUnitsToVelocityMeters(driveKraken.get()), state.speedMetersPerSecond);
                         // SmartDashboard.putNumber("Position Measurment" + moduleNumber, getPosition().angle.getRadians());
                         // SmartDashboard.putNumber("Position Goal" + moduleNumber, state.angle.getRadians());
                 // Calculate the turning motor output from the turning PID controller.
@@ -120,15 +120,15 @@ public abstract class SwerveModule {
                 // Calculate the turning motor output from the turning PID controller.
                 double drivingPower = state.speedMetersPerSecond/4;
                 
-                driveFalcon.set(driveOutput);//-drive out
+                driveKraken.set(driveOutput);//-drive out
           
-                System.out.println("M:" + moduleNumber + " speed:" + driveFalcon.get()/(13824/0.31918581360472297881)); // ticks/s -> m/s
+                System.out.println("M:" + moduleNumber + " speed:" + driveKraken.get()/(13824/0.31918581360472297881)); // ticks/s -> m/s
                 if(ignorCount > 0){
                     ignorCount--;
-                    steeringNeo.set(turnOutput/8);
+                    steeringKraken.set(turnOutput/8);
                     //for some reason the motors want to move in order for the PID to snap out of it
                 }else{
-                    steeringNeo.set(turnOutput);
+                    steeringKraken.set(turnOutput);
                 }
                 //-turnOutput
                 if(this.m_moduleNumber == 1){

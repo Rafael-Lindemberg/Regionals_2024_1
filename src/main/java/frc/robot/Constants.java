@@ -18,28 +18,28 @@ public final class Constants {
   public static double FIELD_WIDTH = Units.feetToMeters(27);
   public static double FIELD_LENGTH = Units.feetToMeters(54);
   public static class Drivetrain{
-    public static final int FRONT_LEFT_DRIVE_CHANNEL = 2;
+    public static final int FRONT_LEFT_DRIVE_CHANNEL = 1;
         public static final int FRONT_LEFT_STEER_CHANNEL = 2;
 
-        public static final int FRONT_RIGHT_DRIVE_CHANNEL = 1;
-        public static final int FRONT_RIGHT_STEER_CHANNEL = 1;
+        public static final int FRONT_RIGHT_DRIVE_CHANNEL = 3;
+        public static final int FRONT_RIGHT_STEER_CHANNEL = 4;
 
-        public static final int BACK_LEFT_DRIVE_CHANNEL = 3;
-        public static final int BACK_LEFT_STEER_CHANNEL = 3;
+        public static final int BACK_LEFT_DRIVE_CHANNEL = 5;
+        public static final int BACK_LEFT_STEER_CHANNEL = 6;
 
-        public static final int BACK_RIGHT_DRIVE_CHANNEL = 4;
-        public static final int BACK_RIGHT_STEER_CHANNEL = 4;
+        public static final int BACK_RIGHT_DRIVE_CHANNEL = 7;
+        public static final int BACK_RIGHT_STEER_CHANNEL = 8;
 
-        public static final int FRONT_LEFT_CANCODER_CHANNEL = 2;
-        public static final int FRONT_RIGHT_CANCODER_CHANNEL = 1;
+        public static final int FRONT_LEFT_CANCODER_CHANNEL = 9;
+        public static final int FRONT_RIGHT_CANCODER_CHANNEL = 10;
 
-        public static final int BACK_LEFT_CANCODER_CHANNEL = 3;
-        public static final int BACK_RIGHT_CANCODER_CHANNEL = 4;
+        public static final int BACK_LEFT_CANCODER_CHANNEL = 11;
+        public static final int BACK_RIGHT_CANCODER_CHANNEL = 12;
         // ENCODER OFFSETS
-        public static final double FRONT_LEFT_ENCODER_OFFSET = -22.1484375;
-        public static final double FRONT_RIGHT_ENCODER_OFFSET = -308.4082;
-        public static final double BACK_LEFT_ENCODER_OFFSET = -214.541016;
-        public static final double BACK_RIGHT_ENCODER_OFFSET = -199.511719;
+        public static final double FRONT_LEFT_ENCODER_OFFSET = 222.451171875;
+        public static final double FRONT_RIGHT_ENCODER_OFFSET = 246.09375;
+        public static final double BACK_LEFT_ENCODER_OFFSET = 265.69335875;
+        public static final double BACK_RIGHT_ENCODER_OFFSET = 302.6953125;
   }
   public static class OperatorConstants {
     public static final int  kDriverControllerPort = 0;

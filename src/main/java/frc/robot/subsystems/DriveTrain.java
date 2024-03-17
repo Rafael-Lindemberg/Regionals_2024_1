@@ -1,15 +1,12 @@
 package frc.robot.subsystems;
 
-
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -29,6 +26,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,7 +37,6 @@ import frc.team1891.common.drivetrains.DrivetrainConfig;
 import frc.team1891.common.drivetrains.SwerveDrivetrain;
 import frc.team1891.common.drivetrains.SwerveModule;
 import frc.team1891.common.hardware.SimNavX;
-import frc.team1891.common.hardware.WPI_CANSparkMax;
 import frc.team1891.common.logger.BullLogger;
 
 public class DriveTrain extends SwerveDrivetrain {
@@ -106,25 +103,25 @@ public class DriveTrain extends SwerveDrivetrain {
   // public static final SimNavX _gyro = new SimNavX(SPI.Port.kMXP);
   public static final SimNavX _gyro = new SimNavX(SerialPort.Port.kUSB2);
 
-  private static final TalonFX frontLeftDriveFalcon = new TalonFX(Constants.Drivetrain.FRONT_LEFT_DRIVE_CHANNEL);
-  private static final WPI_CANSparkMax frontLeftSteerFalcon = new WPI_CANSparkMax(Constants.Drivetrain.FRONT_LEFT_STEER_CHANNEL, MotorType.kBrushless);
+  private static final TalonFX frontLeftDrive = new TalonFX(Constants.Drivetrain.FRONT_LEFT_DRIVE_CHANNEL);
+  private static final TalonFX frontLeftSteer = new TalonFX(Constants.Drivetrain.FRONT_LEFT_STEER_CHANNEL);
   private static final CANcoder frontLeftEncoder = new CANcoder(Constants.Drivetrain.FRONT_LEFT_CANCODER_CHANNEL);
-  private static final SwerveModule frontLeft = SwerveModule.createFromDriveFalconAndSteeringNeo(frontLeftDriveFalcon, frontLeftSteerFalcon, frontLeftEncoder, _config, .1,0,0,.8,0,0,1);
+  private static final SwerveModule frontLeft = SwerveModule.createFromDriveKrakenAndSteeringKraken(frontLeftDrive, frontLeftSteer, frontLeftEncoder, _config, 1,0,0,.08,0,0,1);
   
-  private static final TalonFX frontRightDriveFalcon = new TalonFX(Constants.Drivetrain.FRONT_RIGHT_DRIVE_CHANNEL);
-  private static final WPI_CANSparkMax frontRightSteerFalcon = new WPI_CANSparkMax(Constants.Drivetrain.FRONT_RIGHT_STEER_CHANNEL, MotorType.kBrushless);
+  private static final TalonFX frontRightDrive = new TalonFX(Constants.Drivetrain.FRONT_RIGHT_DRIVE_CHANNEL);
+  private static final TalonFX frontRightSteer = new TalonFX(Constants.Drivetrain.FRONT_RIGHT_STEER_CHANNEL);
   private static final CANcoder frontRightEncoder = new CANcoder(Constants.Drivetrain.FRONT_RIGHT_CANCODER_CHANNEL);
-  private static final SwerveModule frontRight = SwerveModule.createFromDriveFalconAndSteeringNeo(frontRightDriveFalcon, frontRightSteerFalcon, frontRightEncoder, _config, .1,0,0,.8,0,0,3);
+  private static final SwerveModule frontRight = SwerveModule.createFromDriveKrakenAndSteeringKraken(frontRightDrive, frontRightSteer, frontRightEncoder, _config, 1,0,0,.08,0,0,3);
   
-  private static final TalonFX backLeftDriveFalcon = new TalonFX(Constants.Drivetrain.BACK_LEFT_DRIVE_CHANNEL);
-  private static final WPI_CANSparkMax backLeftSteerFalcon = new WPI_CANSparkMax(Constants.Drivetrain.BACK_LEFT_STEER_CHANNEL, MotorType.kBrushless);
+  private static final TalonFX backLeftDrive = new TalonFX(Constants.Drivetrain.BACK_LEFT_DRIVE_CHANNEL);
+  private static final TalonFX backLeftSteer = new TalonFX(Constants.Drivetrain.BACK_LEFT_STEER_CHANNEL);
   private static final CANcoder backLeftEncoder = new CANcoder(Constants.Drivetrain.BACK_LEFT_CANCODER_CHANNEL);
-  private static final SwerveModule backLeft = SwerveModule.createFromDriveFalconAndSteeringNeo(backLeftDriveFalcon, backLeftSteerFalcon, backLeftEncoder, _config, .1,0,0,.8,0,0,2);
+  private static final SwerveModule backLeft = SwerveModule.createFromDriveKrakenAndSteeringKraken(backLeftDrive, backLeftSteer, backLeftEncoder, _config, 1,0,0,.08,0,0,2);
   
-  private static final TalonFX backRightDriveFalcon = new TalonFX(Constants.Drivetrain.BACK_RIGHT_DRIVE_CHANNEL);
-  private static final WPI_CANSparkMax backRightSteerFalcon = new WPI_CANSparkMax(Constants.Drivetrain.BACK_RIGHT_STEER_CHANNEL, MotorType.kBrushless);
+  private static final TalonFX backRightDrive = new TalonFX(Constants.Drivetrain.BACK_RIGHT_DRIVE_CHANNEL);
+  private static final TalonFX backRightSteer = new TalonFX(Constants.Drivetrain.BACK_RIGHT_STEER_CHANNEL);
   private static final CANcoder backRightEncoder = new CANcoder(Constants.Drivetrain.BACK_RIGHT_CANCODER_CHANNEL);
-  private static final SwerveModule backRight = SwerveModule.createFromDriveFalconAndSteeringNeo(backRightDriveFalcon, backRightSteerFalcon, backRightEncoder, _config, .1,0,0,.8,0,0,4);
+  private static final SwerveModule backRight = SwerveModule.createFromDriveKrakenAndSteeringKraken(backRightDrive, backRightSteer, backRightEncoder, _config, 1,0,0,.08,0,0,4);
   
   // logging
   BullLogger m_CurrentBLLogger;
@@ -144,14 +141,14 @@ public class DriveTrain extends SwerveDrivetrain {
     encoders = new CANcoder[]{frontLeftEncoder, backLeftEncoder, frontRightEncoder, backRightEncoder};
     
     gyro.setAngleAdjustment(0);
-    configDriveMotor(frontLeftDriveFalcon);
-    configDriveMotor(frontRightDriveFalcon);
-    configDriveMotor(backLeftDriveFalcon);
-    configDriveMotor(backRightDriveFalcon);
-    configSteerMotor(frontLeftSteerFalcon);
-    configSteerMotor(frontRightSteerFalcon);
-    configSteerMotor(backLeftSteerFalcon);
-    configSteerMotor(backRightSteerFalcon);
+    configDriveMotor(frontLeftDrive);
+    configDriveMotor(frontRightDrive);
+    configDriveMotor(backLeftDrive);
+    configDriveMotor(backRightDrive);
+    configSteerMotor(frontLeftSteer);
+    configSteerMotor(frontRightSteer);
+    configSteerMotor(backLeftSteer);
+    configSteerMotor(backRightSteer);
     configCANCoder(frontLeftEncoder, Constants.Drivetrain.FRONT_LEFT_ENCODER_OFFSET);
     configCANCoder(frontRightEncoder, Constants.Drivetrain.FRONT_RIGHT_ENCODER_OFFSET);
     configCANCoder(backLeftEncoder, Constants.Drivetrain.BACK_LEFT_ENCODER_OFFSET);
@@ -159,7 +156,7 @@ public class DriveTrain extends SwerveDrivetrain {
 
     // get the default instance of NetworkTables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    SmartDashboard.putNumber("module1Offset", 0);
+    SmartDashboard.putNumber("module1Offset", 0); 
     SmartDashboard.putNumber("module2Offset", 0);
     SmartDashboard.putNumber("module3Offset", 0);
     SmartDashboard.putNumber("module4Offset", 0);
@@ -193,15 +190,16 @@ public class DriveTrain extends SwerveDrivetrain {
     driveMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 
-  private static void configSteerMotor(CANSparkMax steerMotor) {
-    steerMotor.restoreFactoryDefaults();
-    steerMotor.setIdleMode(IdleMode.kBrake);
+  private static void configSteerMotor(TalonFX steerMotor) {
+    steerMotor.getConfigurator().apply(new TalonFXConfiguration());
+    steerMotor.setNeutralMode(NeutralModeValue.Brake);
     steerMotor.setInverted(true);
   }
 
   private static void configCANCoder(CANcoder encoder, double encoderOffset) {
-    //encoder.configFactoryDefault();
-    //encoder.configMagnetOffset(encoderOffset);
+    encoder.getConfigurator().apply(new CANcoderConfiguration());
+
+    encoder.getConfigurator().apply(new CANcoderConfiguration().withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(encoderOffset)));
   }
 
   @Override
