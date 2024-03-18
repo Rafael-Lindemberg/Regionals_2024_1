@@ -5,18 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -24,14 +17,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
-import frc.robot.commands.drivetrain.DriveToPose;
-import frc.robot.commands.drivetrain.JoystickDrive;
-import frc.robot.commands.drivetrain.NorthUntilInterupt;
-
+  import frc.robot.commands.drivetrain.NorthUntilInterupt;
 import frc.robot.subsystems.*;
-import frc.robot.utility.YamlLoader;
 import frc.team1891.common.control.AxisTrigger;
-import frc.team1891.common.control.JoystickRotation2d;
 import frc.team1891.common.control.POVTrigger;
 import frc.team1891.common.control.POVTrigger.POV;
 import frc.team1891.common.logger.BullLogger;
@@ -45,6 +33,7 @@ import frc.team1891.common.logger.BullLogger;
 public class RobotContainer {
   // Subsystems
   private final DriveTrain m_DriveTrain = DriveTrain.getInstance();
+  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   // public final Intake m_intake = Intake.getInstance();
   // public final GrabbyArm m_arm = GrabbyArm.getInstance();
   // public final Conveyer m_conveyer = Conveyer.getInstance();
@@ -80,43 +69,12 @@ public class RobotContainer {
   public static XboxController getController() {
     return m_driverController;
   }
-    
-    
-
-  private JoystickRotation2d rightStickRotation2d = new JoystickRotation2d(() -> MathUtil.applyDeadband(-m_driverController.getRightY(), JoystickDrive.DEADBAND), () -> MathUtil.applyDeadband(-m_driverController.getRightX(), JoystickDrive.DEADBAND));
-  private JoystickButton m_intakeButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-  private JoystickButton m_resetGyroJoystickButton = new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
   private JoystickButton m_FaceForward = new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
-  private JoystickButton m_alignToPlaceButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-  private JoystickButton m_moveLow = new JoystickButton(m_driverController, XboxController.Button.kX.value);
-  private JoystickButton m_moveMed = new JoystickButton(m_driverController, XboxController.Button.kY.value);
-  private JoystickButton m_moveHigh = new JoystickButton(m_driverController, XboxController.Button.kB.value);
-  private JoystickButton m_drop = new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private JoystickButton m_xwheels = new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-
-  private AxisTrigger m_leftrightTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kLeftX.value);
-  private AxisTrigger m_forwardBack = new AxisTrigger(m_driverController, XboxController.Axis.kLeftY.value);
   private AxisTrigger m_rightStickTrig = new AxisTrigger(m_driverController, XboxController.Axis.kRightX.value,.13);
-  private AxisTrigger m_leftTrigger = new AxisTrigger(m_driverController, 2);
-  private AxisTrigger m_rightTrigger = new AxisTrigger(m_driverController, 3);
-  
   private POVTrigger m_POVNorth = new POVTrigger(m_driverController, POV.NORTH);
-  private POVTrigger m_POVEast = new POVTrigger(m_driverController, POV.EAST);
-  private POVTrigger m_Retract = new POVTrigger(m_driverController, POV.SOUTH);
-  private POVTrigger m_POVWest = new POVTrigger(m_driverController, POV.WEST);
-
-  private Trigger m_anyArmMovement = m_moveLow.or(m_moveMed).or(m_moveHigh);
-  //Co driver board
-  private JoystickButton m_backDriveIntake = new JoystickButton(m_coBox, 2);
-  public JoystickButton m_ConeCubeMode = new JoystickButton(m_coBox, 5);
-  public JoystickButton m_ArmUpBtn = new JoystickButton(m_coBox, 1);
-  private JoystickButton m_ArmDownBtn = new JoystickButton(m_coBox, 12);
-  private JoystickButton m_ArmInBtn = new JoystickButton(m_coBox, 8);
-  private JoystickButton m_ArmOutBtn = new JoystickButton(m_coBox, 4);
-  private JoystickButton m_zeroArm = new JoystickButton(m_coBox, 10);
-  private JoystickButton m_BelftForward = new JoystickButton(m_coBox, 9);
-  private JoystickButton m_BeltBack = new JoystickButton(m_coBox, 11);
   private JoystickButton m_CoGrab = new JoystickButton(m_coBox, 3);
+
   // belt back and forth
   // grab and drop
 
@@ -211,8 +169,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    //m_intakeButton.whileTrue(new IntakeCommand(m_intake, m_conveyer));
-    //m_intakeButton.onFalse(new Release(m_Grabber).andThen(Commands.waitSeconds(.4)).andThen(new FullRetract(m_arm)));
+    double r2Threshold = 0.5;
+    AxisTrigger r2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kRightTrigger.value, r2Threshold);
+    r2AxisTrigger.onTrue(new ShooterCommand(m_ShooterSubsystem));
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
     
     //m_alignToPlaceButton.onTrue(new DriveToPose(m_DriveTrain, ()-> m_DriveTrain.pickConeScoringArea().getPose2d(), () -> m_leftrightTrigger.or(m_forwardBack.or(m_rightStickTrig)).getAsBoolean()));
@@ -233,17 +192,7 @@ public class RobotContainer {
             },
                 m_DriveTrain));
 
-    //m_moveMed.onTrue(new PoseGrabTo(m_arm, ArmState.MID));
-    //m_BelftForward.whileTrue(new BeltForward(m_conveyer));
-    //m_BeltBack.whileTrue(new BeltBack(m_conveyer));
-    //m_leftTrigger.whileTrue(new LiftArm(m_arm, 0.2));
-    //m_rightTrigger.whileTrue(new LiftArm(m_arm, -0.2));
 
-    //m_moveLow.onTrue(new RetractLiftExtend(m_arm, GrabbyArm.ArmState.LOW, m_conveyer));
-    //m_moveMed.onTrue(new RetractLiftExtend(m_arm, GrabbyArm.ArmState.MID, m_conveyer));
-    //m_moveHigh.onTrue(new RetractLiftExtend(m_arm, GrabbyArm.ArmState.TOP, m_conveyer));
-    //m_rightTrigger.onTrue(new RetractLiftExtend(m_arm, GrabbyArm.ArmState.HUMAN, m_conveyer));
-    //m_Retract.onTrue(new FullRetract(m_arm));
     m_xwheels.onTrue(
       new RunCommand(
         ()->{
@@ -253,27 +202,6 @@ public class RobotContainer {
     );
     m_CoGrab.onTrue(new ButtonPress("pressed"));
     m_CoGrab.onFalse(new ButtonPress("not pressed"));
-    //m_backDriveIntake.whileTrue(new ReverseIntake());
-    
-    //m_backDriveIntake.whileTrue(new Command(() -> m_intake.setPower(.5, .5)));
-    //m_ArmUpBtn.whileTrue(new LiftArm(m_arm, 0.25));
-    //m_ArmDownBtn.whileTrue(new LiftArm(m_arm, -0.25));
-    //m_ArmOutBtn.whileTrue(new ExtendArm(m_arm, .3));
-    //m_ArmInBtn.whileTrue(new ExtendArm(m_arm, -.3));
-    //m_zeroArm.onTrue(new InstantCommand(()-> m_arm.zeroAll()));
-    //m_ConeCubeMode.onTrue(new InstantCommand(() -> coneMode()).andThen(new RunMatrixImageCommand(m_LEDSystem, YamlLoader.getImage("cone256"))));
-    //m_ConeCubeMode.onFalse(new InstantCommand(() -> cubeMode()).andThen(new RunMatrixImageCommand(m_LEDSystem, YamlLoader.getImage("cube256"))));
-    //m_CoGrab.onTrue(new ToggleGrab(m_Grabber));
-
-    //m_anyArmMovement.onTrue(new InstantCommand(() -> m_compressor.disable()));
-    //m_anyArmMovement.onFalse(new InstantCommand(() -> m_compressor.enableDigital()));
-
-    //if the arm is out open claw and retract otherwise just toggle the claw
-    //m_drop.onTrue(new ConditionalCommand(
-    //   new ToggleGrab(m_Grabber),
-    //   new DropAndLower(m_Grabber, m_arm),
-    //   ()-> m_arm.isRetracted()
-    // ));
     
     SmartDashboard.putData("set to 90", new InstantCommand(){
       @Override
@@ -287,18 +215,7 @@ public class RobotContainer {
         setAngle = 30;
       }
     });
-    // SmartDashboard.putData("reset Gyro", new InstantCommand(
-    //   () ->
-    //       {m_DriveTrain.resetGyro();
-    //       System.out.print("reset Gyro");},
-    //       m_DriveTrain));
-
-    //m_autopilotToCommunity.whileTrue(SmartHolonomicTrajectoryCommandGenerator.toCommunityZone(m_DriveTrain));
-    // SmartDashboard.putData("Off", new RunMatrixImageCommand(m_LEDSystem, YamlLoader.getImage("Off")));
-    // SmartDashboard.putData("Offline", new RunMatrixVideoCommand(m_LEDSystem,
-    //         YamlLoader.getVideo("offline"),
-    //         10,
-    //         RunMatrixVideoCommand.RunType.CONTINUOUS));
+  
   }
 
   /**
@@ -306,12 +223,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  private void coneMode(){
-    scoringForCubes = false;
-  }
-  private void cubeMode(){
-    scoringForCubes = true;
-  }
+
   public Command getAutonomousCommand() {
     return Autos.getSelected();
   }
