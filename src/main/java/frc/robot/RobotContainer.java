@@ -63,6 +63,7 @@ public class RobotContainer {
   //       return MathUtil.applyDeadband(super.getRawAxis(axis), .15);
   //     };
   // };
+  private final Joystick m_Joystick = new Joystick(0);
   public static final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
   private final Joystick m_coBox = new Joystick(OperatorConstants.kDriverControllerPort + 1);
 
@@ -70,11 +71,11 @@ public class RobotContainer {
   public static XboxController getController() {
     return m_driverController;
   }
-  private JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
-  private JoystickButton m_FaceForward = new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
-  private JoystickButton m_xwheels = new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-  private AxisTrigger m_rightStickTrig = new AxisTrigger(m_driverController, XboxController.Axis.kRightX.value,.13);
-  private POVTrigger m_POVNorth = new POVTrigger(m_driverController, POV.NORTH);
+  private JoystickButton yButton = new JoystickButton(m_Joystick, XboxController.Button.kY.value);
+  private JoystickButton m_FaceForward = new JoystickButton(m_Joystick, XboxController.Button.kLeftStick.value);
+  private JoystickButton m_xwheels = new JoystickButton(m_Joystick, XboxController.Button.kStart.value);
+  private AxisTrigger m_rightStickTrig = new AxisTrigger(m_Joystick, XboxController.Axis.kRightX.value,.13);
+  private POVTrigger m_POVNorth = new POVTrigger(m_Joystick, POV.NORTH);
   private JoystickButton m_CoGrab = new JoystickButton(m_coBox, 3);
 
   // belt back and forth
@@ -126,11 +127,11 @@ public class RobotContainer {
     m_DriveTrain.setDefaultCommand(
         new RunCommand(
             () -> {
-                m_driverController.setRumble(RumbleType.kBothRumble, 0.0);
+                m_Joystick.setRumble(RumbleType.kBothRumble, 0.0);
                 final double DEADBAND = .15;
-                double x = m_driverController.getLeftX();
-                double y = m_driverController.getLeftY();
-                double z = m_driverController.getRightX();
+                double x = m_Joystick.getRawAxis(0);
+                double y = m_Joystick.getRawAxis(1);
+                double z = m_Joystick.getRawAxis(5);
                 if (Math.abs(x) > DEADBAND) {
                   y = MathUtil.applyDeadband(y, DEADBAND*.6);
                 } else {
@@ -177,7 +178,7 @@ public class RobotContainer {
     r2AxisTrigger.whileTrue(new ShooterCommand(m_ShooterSubsystem));
     AxisTrigger l2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kLeftTrigger.value, l2Threshold );
     l2AxisTrigger.whileTrue(new IntakeCommand(m_IntakeSubsystem));
-    m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
+    m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_Joystick.getRawAxis(0),() -> m_Joystick.getRawAxis(1),() -> m_rightStickTrig.getAsBoolean()));
    
     
     //m_alignToPlaceButton.onTrue(new DriveToPose(m_DriveTrain, ()-> m_DriveTrain.pickConeScoringArea().getPose2d(), () -> m_leftrightTrigger.or(m_forwardBack.or(m_rightStickTrig)).getAsBoolean()));

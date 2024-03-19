@@ -42,7 +42,7 @@ public final class Constants {
         public static final double BACK_RIGHT_ENCODER_OFFSET = 302.6953125;
   }
   public static class OperatorConstants {
-    public static final int  kDriverControllerPort = 0;
+    public static final int  kDriverControllerPort = 1;
   }
 
 }
