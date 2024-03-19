@@ -70,6 +70,7 @@ public class RobotContainer {
   public static XboxController getController() {
     return m_driverController;
   }
+  private JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
   private JoystickButton m_FaceForward = new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
   private JoystickButton m_xwheels = new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private AxisTrigger m_rightStickTrig = new AxisTrigger(m_driverController, XboxController.Axis.kRightX.value,.13);
@@ -177,6 +178,7 @@ public class RobotContainer {
     AxisTrigger l2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kLeftTrigger.value, l2Threshold );
     l2AxisTrigger.whileTrue(new IntakeCommand(m_IntakeSubsystem));
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
+   
     
     //m_alignToPlaceButton.onTrue(new DriveToPose(m_DriveTrain, ()-> m_DriveTrain.pickConeScoringArea().getPose2d(), () -> m_leftrightTrigger.or(m_forwardBack.or(m_rightStickTrig)).getAsBoolean()));
       //m_alignToPlaceButton.onTrue(new ConditionalCommand(
