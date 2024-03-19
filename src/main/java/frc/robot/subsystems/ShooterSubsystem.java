@@ -1,21 +1,21 @@
 package frc.robot.subsystems;
-
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.ControlModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final CANSparkMax positiveMotor;
-    private final CANSparkMax negativeMotor;
+    private final com.ctre.phoenix6.hardware.TalonFX positiveMotor; // Changed to TalonFX
+    private final com.ctre.phoenix6.hardware.TalonFX negativeMotor; 
 
     public ShooterSubsystem() {
-        positiveMotor = new CANSparkMax(15, com.revrobotics.CANSparkLowLevel.MotorType.kBrushed);
-        negativeMotor = new CANSparkMax(16, com.revrobotics.CANSparkLowLevel.MotorType.kBrushed);
+        positiveMotor = new TalonFX(15);
+        negativeMotor = new TalonFX(16);
     }
 
     public void shoot(double speed) {   
         positiveMotor.set(speed);
-        negativeMotor.set(-speed);
+        negativeMotor.set((speed*-1));
     }
 
     public void stop() {

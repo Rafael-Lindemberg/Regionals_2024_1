@@ -34,6 +34,7 @@ public class RobotContainer {
   // Subsystems
   private final DriveTrain m_DriveTrain = DriveTrain.getInstance();
   private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   // public final Intake m_intake = Intake.getInstance();
   // public final GrabbyArm m_arm = GrabbyArm.getInstance();
   // public final Conveyer m_conveyer = Conveyer.getInstance();
@@ -170,8 +171,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     double r2Threshold = 0.5;
+    double l2Threshold = 0.5;
     AxisTrigger r2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kRightTrigger.value, r2Threshold);
-    r2AxisTrigger.onTrue(new ShooterCommand(m_ShooterSubsystem));
+    r2AxisTrigger.whileTrue(new ShooterCommand(m_ShooterSubsystem));
+    AxisTrigger l2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kLeftTrigger.value, l2Threshold );
+    l2AxisTrigger.whileTrue(new IntakeCommand(m_IntakeSubsystem));
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
     
     //m_alignToPlaceButton.onTrue(new DriveToPose(m_DriveTrain, ()-> m_DriveTrain.pickConeScoringArea().getPose2d(), () -> m_leftrightTrigger.or(m_forwardBack.or(m_rightStickTrig)).getAsBoolean()));

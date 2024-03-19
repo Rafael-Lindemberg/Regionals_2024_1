@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utility.TestCommandScheduler;
@@ -23,6 +27,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+ private Joystick controller = new Joystick(0);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -96,8 +102,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
+    if (m_autonomousCommand != null) {
+        m_autonomousCommand.cancel();
+
+      }
+    
+
     // var testCommandScheduler = TestCommandScheduler.getInstance();
     // testCommandScheduler.enable();
     // testCommandScheduler.schedule(new RunSnake(MatrixLEDs.getInstance(), new SnakeGame(),
@@ -112,6 +126,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+
+
     TestCommandScheduler.getInstance().run();
   }
 
