@@ -104,22 +104,22 @@ public class DriveTrain extends SwerveDrivetrain {
   private static final TalonFX frontLeftDrive = new TalonFX(Constants.Drivetrain.FRONT_LEFT_DRIVE_CHANNEL);
   private static final TalonFX frontLeftSteer = new TalonFX(Constants.Drivetrain.FRONT_LEFT_STEER_CHANNEL);
   private static final CANcoder frontLeftEncoder = new CANcoder(Constants.Drivetrain.FRONT_LEFT_CANCODER_CHANNEL);
-  private static final SwerveModule frontLeft = SwerveModule.createFromDriveKrakenAndSteeringKraken(frontLeftDrive, frontLeftSteer, frontLeftEncoder, _config, .4,0,0,.2,0,0.0,1);
+  private static final SwerveModule frontLeft = SwerveModule.createFromDriveKrakenAndSteeringKraken(frontLeftDrive, frontLeftSteer, frontLeftEncoder, _config, .4,0,0,.3,0,0.0,1);
   
   private static final TalonFX frontRightDrive = new TalonFX(Constants.Drivetrain.FRONT_RIGHT_DRIVE_CHANNEL);
   private static final TalonFX frontRightSteer = new TalonFX(Constants.Drivetrain.FRONT_RIGHT_STEER_CHANNEL);
   private static final CANcoder frontRightEncoder = new CANcoder(Constants.Drivetrain.FRONT_RIGHT_CANCODER_CHANNEL);
-  private static final SwerveModule frontRight = SwerveModule.createFromDriveKrakenAndSteeringKraken(frontRightDrive, frontRightSteer, frontRightEncoder, _config, .4,0,0,.2,0.,0,3);
+  private static final SwerveModule frontRight = SwerveModule.createFromDriveKrakenAndSteeringKraken(frontRightDrive, frontRightSteer, frontRightEncoder, _config, .4,0,0,.3,0.,0,3);
   
   private static final TalonFX backLeftDrive = new TalonFX(Constants.Drivetrain.BACK_LEFT_DRIVE_CHANNEL);
   private static final TalonFX backLeftSteer = new TalonFX(Constants.Drivetrain.BACK_LEFT_STEER_CHANNEL);
   private static final CANcoder backLeftEncoder = new CANcoder(Constants.Drivetrain.BACK_LEFT_CANCODER_CHANNEL);
-  private static final SwerveModule backLeft = SwerveModule.createFromDriveKrakenAndSteeringKraken(backLeftDrive, backLeftSteer, backLeftEncoder, _config, .4,0,0,.2,0,0.0,2);
+  private static final SwerveModule backLeft = SwerveModule.createFromDriveKrakenAndSteeringKraken(backLeftDrive, backLeftSteer, backLeftEncoder, _config, .4,0,0,.3,0,0.0,2);
   
   private static final TalonFX backRightDrive = new TalonFX(Constants.Drivetrain.BACK_RIGHT_DRIVE_CHANNEL);
   private static final TalonFX backRightSteer = new TalonFX(Constants.Drivetrain.BACK_RIGHT_STEER_CHANNEL);
   private static final CANcoder backRightEncoder = new CANcoder(Constants.Drivetrain.BACK_RIGHT_CANCODER_CHANNEL);
-  private static final SwerveModule backRight = SwerveModule.createFromDriveKrakenAndSteeringKraken(backRightDrive, backRightSteer, backRightEncoder, _config, .4,0,0,.2,0.0,0.0,4);
+  private static final SwerveModule backRight = SwerveModule.createFromDriveKrakenAndSteeringKraken(backRightDrive, backRightSteer, backRightEncoder, _config, .4,0,0,.3,0.0,0.0,4);
   
   // logging
   BullLogger m_CurrentBLLogger;
@@ -139,10 +139,10 @@ public class DriveTrain extends SwerveDrivetrain {
     encoders = new CANcoder[]{frontLeftEncoder, backLeftEncoder, frontRightEncoder, backRightEncoder};
     
     gyro.setAngleAdjustment(0);
-    configDriveMotorInverted(frontLeftDrive);
-    configDriveMotorInverted(frontRightDrive);
-    configDriveMotor(backLeftDrive);
-    configDriveMotor(backRightDrive);
+    configDriveMotor(frontLeftDrive);
+    configDriveMotor(frontRightDrive);
+    configDriveMotorInverted(backLeftDrive);
+    configDriveMotorInverted(backRightDrive);
     configSteerMotor(frontLeftSteer);
     configSteerMotor(frontRightSteer);
     configSteerMotor(backLeftSteer);
