@@ -13,16 +13,16 @@ public class ClimberSubsystem extends SubsystemBase {
          climberMotor = new TalonFX(17);
     }
 
-    public void moveUp() {   
-        climberMotor.set(0.8);
+    public void moveUp(double speed) {   
+        climberMotor.set(speed);
     }
 
     public void moveDown(double speed){
-        climberMotor.set((0.3*-1));
+        climberMotor.set(speed*-1);
     }
 
-    public void stop(double Speed) {
-        climberMotor.set(0);
+    public void stop(double speed) {
+        climberMotor.set(speed);
     }
 
 }
