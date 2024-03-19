@@ -139,10 +139,10 @@ public class DriveTrain extends SwerveDrivetrain {
     encoders = new CANcoder[]{frontLeftEncoder, backLeftEncoder, frontRightEncoder, backRightEncoder};
     
     gyro.setAngleAdjustment(0);
-    configDriveMotor(frontLeftDrive);
-    configDriveMotor(frontRightDrive);
-    configDriveMotorInverted(backLeftDrive);
-    configDriveMotorInverted(backRightDrive);
+    configDriveMotorInverted(frontLeftDrive);
+    configDriveMotorInverted(frontRightDrive);
+    configDriveMotor(backLeftDrive);
+    configDriveMotor(backRightDrive);
     configSteerMotor(frontLeftSteer);
     configSteerMotor(frontRightSteer);
     configSteerMotor(backLeftSteer);
