@@ -177,8 +177,7 @@ public class RobotContainer {
   private void configureBindings() {
     double r2Threshold = 0.5;
     double l2Threshold = 0.5;
-    double r1Threshold = 0.5;
-    double l1Threshold = 0.5;
+
     AxisTrigger r2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kRightTrigger.value, r2Threshold);
     r2AxisTrigger.whileTrue(new ShooterCommand(m_ShooterSubsystem));
     
@@ -188,10 +187,10 @@ public class RobotContainer {
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_Joystick.getRawAxis(0),() -> m_Joystick.getRawAxis(1),() -> m_rightStickTrig.getAsBoolean()));
 
    
-    JoystickButton r1Button = new JoystickButton(m_driverController, XboxController.Button.kBumperRight.value, r1Threshold);
+    JoystickButton r1Button = new JoystickButton(m_driverController, 10);
     r1Button.whileTrue(new ClimberDown(m_ClimberSubsystem));
 
-    JoystickButton r2Button = new JoystickButton(m_driverController, XboxController.Button.kBumperRight.value, r2Threshold);
+    JoystickButton r2Button = new JoystickButton(m_driverController, 11);
     r2Button.whileTrue(new ClimberUp(m_ClimberSubsystem));
 
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
