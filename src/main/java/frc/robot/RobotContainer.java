@@ -131,7 +131,7 @@ public class RobotContainer {
         new RunCommand(
             () -> {
                 m_Joystick.setRumble(RumbleType.kBothRumble, 0.0);
-                final double DEADBAND = .15;
+                final double DEADBAND = .4;
                 double x = m_Joystick.getRawAxis(0);
                 double y = m_Joystick.getRawAxis(1);
                 double z = m_Joystick.getRawAxis(5);
@@ -187,11 +187,11 @@ public class RobotContainer {
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_Joystick.getRawAxis(0),() -> m_Joystick.getRawAxis(1),() -> m_rightStickTrig.getAsBoolean()));
 
    
-    JoystickButton r1Button = new JoystickButton(m_driverController, 10);
+    JoystickButton r1Button = new JoystickButton(m_driverController, 6);
     r1Button.whileTrue(new ClimberDown(m_ClimberSubsystem));
 
-    JoystickButton r2Button = new JoystickButton(m_driverController, 11);
-    r2Button.whileTrue(new ClimberUp(m_ClimberSubsystem));
+    JoystickButton l1Button = new JoystickButton(m_driverController, 5);
+    l1Button.whileTrue(new ClimberUp(m_ClimberSubsystem));
 
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
 
