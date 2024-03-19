@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
-import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -23,10 +22,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.CircularBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -204,11 +201,11 @@ public class DriveTrain extends SwerveDrivetrain {
     driveMotor.setInverted(true);
   }
 
-    private static void configSteerMotorInverted(TalonFX steerMotor) {
-    steerMotor.getConfigurator().apply(new TalonFXConfiguration());
-    steerMotor.setNeutralMode(NeutralModeValue.Brake);
-    steerMotor.setInverted(true);
-  }
+  //   private static void configSteerMotorInverted(TalonFX steerMotor) { In case of any inverted motors - rafael (not necessary)
+  //   steerMotor.getConfigurator().apply(new TalonFXConfiguration());
+  //   steerMotor.setNeutralMode(NeutralModeValue.Brake);
+  //   steerMotor.setInverted(true);
+  // }
 
   private static void configCANCoder(CANcoder encoder, double encoderOffset) {
     encoder.getConfigurator().apply(new CANcoderConfiguration());
