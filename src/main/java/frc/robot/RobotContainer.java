@@ -184,9 +184,9 @@ public class RobotContainer {
     
     AxisTrigger l2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kLeftTrigger.value, l2Threshold );
     l2AxisTrigger.whileTrue(new IntakeCommand(m_IntakeSubsystem));
-<<<<<<< Updated upstream
+
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_Joystick.getRawAxis(0),() -> m_Joystick.getRawAxis(1),() -> m_rightStickTrig.getAsBoolean()));
-=======
+
    
     JoystickButton r1Button = new JoystickButton(m_driverController, XboxController.Button.kBumperRight.value, r1Threshold);
     r1Button.whileTrue(new ClimberDown(m_ClimberSubsystem));
@@ -195,7 +195,7 @@ public class RobotContainer {
     r2Button.whileTrue(new ClimberUp(m_ClimberSubsystem));
 
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
->>>>>>> Stashed changes
+
    
 
     
