@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
-  import frc.robot.commands.drivetrain.NorthUntilInterupt;
+import frc.robot.commands.climber.ClimberDown;
+import frc.robot.commands.climber.ClimberUp;
+import frc.robot.commands.drivetrain.NorthUntilInterupt;
 import frc.robot.subsystems.*;
 import frc.team1891.common.control.AxisTrigger;
 import frc.team1891.common.control.POVTrigger;
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final DriveTrain m_DriveTrain = DriveTrain.getInstance();
   private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
   // public final Intake m_intake = Intake.getInstance();
   // public final GrabbyArm m_arm = GrabbyArm.getInstance();
   // public final Conveyer m_conveyer = Conveyer.getInstance();
@@ -174,12 +177,27 @@ public class RobotContainer {
   private void configureBindings() {
     double r2Threshold = 0.5;
     double l2Threshold = 0.5;
+    double r1Threshold = 0.5;
+    double l1Threshold = 0.5;
     AxisTrigger r2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kRightTrigger.value, r2Threshold);
     r2AxisTrigger.whileTrue(new ShooterCommand(m_ShooterSubsystem));
+    
     AxisTrigger l2AxisTrigger = new AxisTrigger(m_driverController, XboxController.Axis.kLeftTrigger.value, l2Threshold );
     l2AxisTrigger.whileTrue(new IntakeCommand(m_IntakeSubsystem));
+<<<<<<< Updated upstream
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_Joystick.getRawAxis(0),() -> m_Joystick.getRawAxis(1),() -> m_rightStickTrig.getAsBoolean()));
+=======
    
+    JoystickButton r1Button = new JoystickButton(m_driverController, XboxController.Button.kBumperRight.value, r1Threshold);
+    r1Button.whileTrue(new ClimberDown(m_ClimberSubsystem));
+
+    JoystickButton r2Button = new JoystickButton(m_driverController, XboxController.Button.kBumperRight.value, r2Threshold);
+    r2Button.whileTrue(new ClimberUp(m_ClimberSubsystem));
+
+    m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
+>>>>>>> Stashed changes
+   
+
     
     //m_alignToPlaceButton.onTrue(new DriveToPose(m_DriveTrain, ()-> m_DriveTrain.pickConeScoringArea().getPose2d(), () -> m_leftrightTrigger.or(m_forwardBack.or(m_rightStickTrig)).getAsBoolean()));
       //m_alignToPlaceButton.onTrue(new ConditionalCommand(

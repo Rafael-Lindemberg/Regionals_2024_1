@@ -20,7 +20,6 @@ public class ShooterCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        // Stop shooter motors when command ends
         shooter.stop();
     }
 }

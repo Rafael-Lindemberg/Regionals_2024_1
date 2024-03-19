@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.ControlModeValue;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final com.ctre.phoenix6.hardware.TalonFX positiveMotor; // Changed to TalonFX
+    private final com.ctre.phoenix6.hardware.TalonFX positiveMotor; // TalonFX 
     private final com.ctre.phoenix6.hardware.TalonFX negativeMotor; 
 
     public ShooterSubsystem() {
