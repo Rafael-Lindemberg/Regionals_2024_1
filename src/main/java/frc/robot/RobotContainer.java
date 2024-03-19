@@ -66,9 +66,9 @@ public class RobotContainer {
   //       return MathUtil.applyDeadband(super.getRawAxis(axis), .15);
   //     };
   // };
-  private final Joystick m_Joystick = new Joystick(0);
-  public static final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
-  private final Joystick m_coBox = new Joystick(OperatorConstants.kDriverControllerPort + 1);
+  private final Joystick m_Joystick = new Joystick(1);
+  public static final XboxController m_driverController = new XboxController(0);
+  private final Joystick m_coBox = new Joystick(2);
 
   // This is big bad, but I'm lazy -stephen
   public static XboxController getController() {
