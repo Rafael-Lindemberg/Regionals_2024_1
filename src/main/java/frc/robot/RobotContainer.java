@@ -149,16 +149,12 @@ public class RobotContainer {
 
                 
 
-                m_DriveTrain.holonomicDrive(
-                    // I may be wrong, but I think all of these should be negative (not z), 
-                    // since forward y is negative, and on the x axes left is 
-                    // positive for the robot strafing and twisting.
-                    // It checks out in the simulator..
-                    //Z should not be negative, the simulator has reversed turning for some reason
-                    -y,
-                    -x,
-                    z,
-                    true);
+                if (m_Joystick.getRawButton(15)){
+                  m_DriveTrain.holonomicDrive(-y,-x,z/2,true);         
+              } else if (!m_Joystick.getRawButton(15)){
+                  m_DriveTrain.holonomicDrive(-y,-x,z,true);         
+              }
+              
             }, m_DriveTrain));
     // if(DriverStation.isDSAttached()) {
     //   firstLogo.schedule();
