@@ -90,14 +90,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     
-    if(timer<3){
-      drive.holonomicDrive(0, 0.5, 0, true);
-    }
-    if(timer>3){
-      drive.holonomicDrive(0,0,0,true);
-    }
+    // if(timer<3){
+    //   drive.holonomicDrive(0, 0.5, 0, true);
+    // }
+    // if(timer>3){
+    //   drive.holonomicDrive(0,0,0,true);
+    // }
 
-    timer = timer + 0.020;
+    // timer = timer + 0.020;
 
   }
 

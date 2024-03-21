@@ -1,5 +1,5 @@
 // ShooterCommand.java
-package frc.robot.commands;
+package frc.robot.commands.AMP;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;

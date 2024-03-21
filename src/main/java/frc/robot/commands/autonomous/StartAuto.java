@@ -13,7 +13,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class StartAuto extends SequentialCommandGroup {
   /** Creates a new StartAuto. */
   public StartAuto(IntakeSubsystem intake, ShooterSubsystem shooter) {
+
     addCommands(new AutoShooter(shooter, intake).withTimeout(3));
+    
   }
 
 

@@ -1,13 +1,13 @@
 // ShooterCommand.java
-package frc.robot.commands;
+package frc.robot.commands.AMP;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AmpShooterTwo extends Command {
+public class AmpShooter extends Command {
     private final ShooterSubsystem shooter;
 
-    public AmpShooterTwo(ShooterSubsystem shooterSubsystem) {
+    public AmpShooter(ShooterSubsystem shooterSubsystem) {
         shooter = shooterSubsystem;
         addRequirements(shooterSubsystem);
     }

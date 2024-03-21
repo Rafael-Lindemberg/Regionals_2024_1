@@ -224,10 +224,10 @@ public class DriveTrain extends SwerveDrivetrain {
       }
     }
     SmartDashboard.putNumber("robot pitch angle", gyro.getPitch());
-    SmartDashboard.putNumber("SwerveModule1 angle", frontRightEncoder.getAbsolutePosition().getValue());
-    SmartDashboard.putNumber("SwerveModule2 angle", frontLeftEncoder.getAbsolutePosition().getValue());
-    SmartDashboard.putNumber("SwerveModule3 angle", backLeftEncoder.getAbsolutePosition().getValue());
-    SmartDashboard.putNumber("SwerveModule4 angle", backRightEncoder.getAbsolutePosition().getValue());
+    SmartDashboard.putNumber("SwerveModule1 angle", frontRightEncoder.getAbsolutePosition().getValue() * 360);
+    SmartDashboard.putNumber("SwerveModule2 angle", frontLeftEncoder.getAbsolutePosition().getValue() * 360);
+    SmartDashboard.putNumber("SwerveModule3 angle", backLeftEncoder.getAbsolutePosition().getValue() * 360);
+    SmartDashboard.putNumber("SwerveModule4 angle", backRightEncoder.getAbsolutePosition().getValue() * 360);
     //System.out.println("Gyro pitch: " + gyro.getPitch());
     //double[] visionPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose").getDoubleArray(new double[6]);
     if(Robot.isReal()){
