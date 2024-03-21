@@ -74,13 +74,11 @@ public class RobotContainer {
   public static XboxController getController() {
     return m_driverController;
   }
-  private JoystickButton yButton = new JoystickButton(m_Joystick, XboxController.Button.kY.value);
   private JoystickButton m_FaceForward = new JoystickButton(m_Joystick, XboxController.Button.kLeftStick.value);
   private JoystickButton m_xwheels = new JoystickButton(m_Joystick, XboxController.Button.kStart.value);
   private AxisTrigger m_rightStickTrig = new AxisTrigger(m_Joystick, XboxController.Axis.kRightX.value,.13);
   private POVTrigger m_POVNorth = new POVTrigger(m_Joystick, POV.NORTH);
   private JoystickButton m_CoGrab = new JoystickButton(m_coBox, 3);
-
   // belt back and forth
   // grab and drop
 
@@ -188,6 +186,18 @@ public class RobotContainer {
 
     JoystickButton l1Button = new JoystickButton(m_driverController, 5);
     l1Button.whileTrue(new ClimberUp(m_ClimberSubsystem));
+
+    JoystickButton triangle = new JoystickButton(m_driverController, 4);
+    triangle.whileTrue(new AmpShooter(m_ShooterSubsystem));
+    
+    JoystickButton circle = new JoystickButton(m_driverController, 2);
+    circle.whileTrue(new AmpShooterTwo(m_ShooterSubsystem));
+
+    JoystickButton x = new JoystickButton(m_driverController, 1);
+    x.whileTrue(new AmpShooterThree(m_ShooterSubsystem));
+
+    JoystickButton square = new JoystickButton(m_driverController, 3);
+    square.whileTrue(new AmpShooterFour(m_ShooterSubsystem));
 
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_driverController.getLeftX(),() -> m_driverController.getLeftY(),() -> m_rightStickTrig.getAsBoolean()));
 
