@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.utility.TestCommandScheduler;
 
 
@@ -20,11 +22,15 @@ import frc.robot.utility.TestCommandScheduler;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
  private Joystick controller = new Joystick(0);
+  private double timer = 0;
+
+   private final DriveTrain drive = DriveTrain.getInstance();
 
 
   /**
@@ -76,11 +82,24 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    timer = 0;
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    
+    if(timer<3){
+      drive.holonomicDrive(0, 0.5, 0, true);
+    }
+    if(timer>3){
+      drive.holonomicDrive(0,0,0,true);
+    }
+
+    timer = timer + 0.020;
+
+  }
 
   @Override
   public void teleopInit() {

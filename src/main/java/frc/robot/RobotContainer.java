@@ -179,7 +179,6 @@ public class RobotContainer {
     l2AxisTrigger.whileTrue(new IntakeCommand(m_IntakeSubsystem));
 
     m_FaceForward.onTrue(new NorthUntilInterupt(m_DriveTrain,()-> m_Joystick.getRawAxis(0),() -> m_Joystick.getRawAxis(1),() -> m_rightStickTrig.getAsBoolean()));
-
    
     JoystickButton r1Button = new JoystickButton(m_driverController, 6);
     r1Button.whileTrue(new ClimberDown(m_ClimberSubsystem));
